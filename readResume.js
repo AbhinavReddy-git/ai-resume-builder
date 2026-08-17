@@ -1,26 +1,30 @@
 import fs from "fs";
-import { parse } from "path";
-import {PDFParse} from "pdf-parse";
-const pdfBuffer=fs.readFileSync("./resumes/resume.pdf");
+// import { parse } from "path";
+// import {PDFParse} from "pdf-parse";
+// const pdfBuffer=fs.readFileSync("./resumes/resume.pdf");
 
-const requiredSkills=["JavaScript","Python","AWS","React","Node.js","Mongo DB"];
+// const requiredSkills=["JavaScript","Python","AWS","React","Node.js","Mongo DB"];
 
-async function readResume() {
-  const parser = new PDFParse({data:pdfBuffer});
-  const result = await parser.getText();
+const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
 
-  const resumeText = result.text.toLowerCase();
+console.log(jobDescription);
 
-  const matchedSkills = requiredSkills.filter(skills=> resumeText.includes(skills.toLowerCase()));
-  const missingSkills = requiredSkills.filter(skills => !resumeText.includes(skills.toLowerCase()));
-  const matchPercentage = (matchedSkills.length/requiredSkills.length)*100;
+// async function readResume() {
+//   const parser = new PDFParse({data:pdfBuffer});
+//   const result = await parser.getText();
 
-  console.log("===AI RESUME ANALYZER");
-  console.log("Matched : ",matchedSkills);
-  console.log("Missing : ",missingSkills);
-  console.log("Match : ",matchPercentage+"%");
+//   const resumeText = result.text.toLowerCase();
 
-  await parser.destroy();
-}
+//   const matchedSkills = requiredSkills.filter(skills=> resumeText.includes(skills.toLowerCase()));
+//   const missingSkills = requiredSkills.filter(skills => !resumeText.includes(skills.toLowerCase()));
+//   const matchPercentage = (matchedSkills.length/requiredSkills.length)*100;
 
-readResume()
+//   console.log("===AI RESUME ANALYZER");
+//   console.log("Matched : ",matchedSkills);
+//   console.log("Missing : ",missingSkills);
+//   console.log("Match : ",matchPercentage+"%");
+
+//   await parser.destroy();
+// }
+
+// readResume()
