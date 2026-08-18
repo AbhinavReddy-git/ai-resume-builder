@@ -1,30 +1,34 @@
 import fs from "fs";
-// import { parse } from "path";
-// import {PDFParse} from "pdf-parse";
-// const pdfBuffer=fs.readFileSync("./resumes/resume.pdf");
+import {PDFParse} from "pdf-parse";
 
-// const requiredSkills=["JavaScript","Python","AWS","React","Node.js","Mongo DB"];
+const pdfBuffer=fs.readFileSync("./resumes/resume.pdf");
+
 
 const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
 
-console.log(jobDescription);
+const jobText=jobDescription.toLowerCase();
 
-// async function readResume() {
-//   const parser = new PDFParse({data:pdfBuffer});
-//   const result = await parser.getText();
+const possibleSkills = ["JavaScript","Python","AWS","React","Node.js","Mongo DB"];
 
-//   const resumeText = result.text.toLowerCase();
+const requiredSkills = possibleSkills.filter(skills => jobText.includes(skills.toLowerCase()))
 
-//   const matchedSkills = requiredSkills.filter(skills=> resumeText.includes(skills.toLowerCase()));
-//   const missingSkills = requiredSkills.filter(skills => !resumeText.includes(skills.toLowerCase()));
-//   const matchPercentage = (matchedSkills.length/requiredSkills.length)*100;
 
-//   console.log("===AI RESUME ANALYZER");
-//   console.log("Matched : ",matchedSkills);
-//   console.log("Missing : ",missingSkills);
-//   console.log("Match : ",matchPercentage+"%");
+async function readResume() {
+  const parser = new PDFParse({data:pdfBuffer});
+  const result = await parser.getText();
 
-//   await parser.destroy();
-// }
+  const resumeText = result.text.toLowerCase();
 
-// readResume()
+  const matchedSkills = requiredSkills.filter(skills=> resumeText.includes(skills.toLowerCase()));
+  const missingSkills = requiredSkills.filter(skills => !resumeText.includes(skills.toLowerCase()));
+  const matchPercentage = (matchedSkills.length/requiredSkills.length)*100;
+
+  console.log("===AI RESUME ANALYZER");
+  console.log("Matched : ",matchedSkills);
+  console.log("Missing : ",missingSkills);
+  console.log("Match : ",matchPercentage+"%");
+
+  await parser.destroy();
+}
+
+readResume()
