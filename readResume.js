@@ -21,12 +21,13 @@ async function readResume() {
 
   const matchedSkills = requiredSkills.filter(skills=> resumeText.includes(skills.toLowerCase()));
   const missingSkills = requiredSkills.filter(skills => !resumeText.includes(skills.toLowerCase()));
-  const matchPercentage = (matchedSkills.length/requiredSkills.length)*100;
+
+  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;
 
   console.log("===AI RESUME ANALYZER");
   console.log("Matched : ",matchedSkills);
   console.log("Missing : ",missingSkills);
-  console.log("Match : ",matchPercentage+"%");
+  console.log("Match : ",matchPercentage.toFixed(2)+"%");
 
   await parser.destroy();
 }
