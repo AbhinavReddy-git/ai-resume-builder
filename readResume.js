@@ -8,7 +8,7 @@ const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
 
 const jobText=jobDescription.toLowerCase();
 
-const possibleSkills = ["JavaScript","Python","AWS","React","Node.js","Mongo DB"];
+const possibleSkills = ["JavaScript", "Python", "C++", "Java", "React", "Node.js", "Express.js", "Mongo DB", "PostgreSQL", "SQL", "AWS", "Docker", "Kubernetes", "Git", "HTML", "CSS", "Django", "REST API", "TypeScript"];
 
 const requiredSkills = possibleSkills.filter(skills => jobText.includes(skills.toLowerCase()))
 
