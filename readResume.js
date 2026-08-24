@@ -1,9 +1,14 @@
 import fs from "fs";
 import {PDFParse} from "pdf-parse";
 
-const pdfBuffer=fs.readFileSync("./resumes/resume.pdf")
+const pdfBuffer=fs.readFileSync("./resumes/resume.pdf");
+
+function normalizeSkill(skill){
+  return skill.toLowerCase().replace(/[ .]/g, "");
+}
 
 function extractSkills(text,possibleSkills){
+  const normalizeText= normalizeSkill(text);
   return possibleSkills.filter(skill => text.includes(skill.toLowerCase()));
 }
 
