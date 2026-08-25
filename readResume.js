@@ -9,7 +9,15 @@ function normalizeSkill(skill){
 
 function extractSkills(text,possibleSkills){
   const normalizeText= normalizeSkill(text);
-  return possibleSkills.filter(skill => text.includes(skill.toLowerCase()));
+  return possibleSkills.filter(skill => normalizeText.includes(normalizeSkill(skill)));
+}
+
+function compareSkills(requiredSkills,resumeSkills){
+  const matchedSkills = requiredSkills.filter(skill => resumeSkills.includes(skill));
+  const missingSkills = requiredSkills.filter(skill => !resumeSkills.includes(skill));
+
+  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;
+  return {matchedSkills,missingSkills,matchPercentage};
 }
 
 const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
@@ -29,15 +37,12 @@ async function readResume() {
 
   const resumeSkills = extractSkills(resumeText,possibleSkills);
 
-  const matchedSkills = requiredSkills.filter(skill=> resumeSkills.includes(skill));
-  const missingSkills = requiredSkills.filter(skill => !resumeSkills.includes(skill));
-
-  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;
+  const skillAnalysis = compareSkills(requiredSkills,resumeSkills);
 
   console.log("===AI RESUME ANALYZER");
-  console.log("Matched : ",matchedSkills);
-  console.log("Missing : ",missingSkills);
-  console.log("Match : ",matchPercentage.toFixed(2)+"%");
+  console.log("Matched : ",skillAnalysis.matchedSkills);
+  console.log("Missing : ",skillAnalysis.missingSkills);
+  console.log("Match : ",skillAnalysis.matchPercentage.toFixed(2)+"%");
 
   await parser.destroy();
 }
