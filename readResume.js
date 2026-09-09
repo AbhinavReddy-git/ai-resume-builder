@@ -1,7 +1,6 @@
 import fs from "fs";
 import {PDFParse} from "pdf-parse";
 
-const pdfBuffer=fs.readFileSync("./resumes/resume.pdf");
 
 function normalizeSkill(skill){
   return skill.toLowerCase().replace(/[ .]/g, "");
@@ -16,7 +15,7 @@ function compareSkills(requiredSkills,resumeSkills){
   const matchedSkills = requiredSkills.filter(skill => resumeSkills.includes(skill));
   const missingSkills = requiredSkills.filter(skill => !resumeSkills.includes(skill));
 
-  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;
+  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;q
   return {matchedSkills,missingSkills,matchPercentage};
 }
 
@@ -29,7 +28,9 @@ const possibleSkills = ["JavaScript", "Python", "C++", "Java", "React", "Node.js
 const requiredSkills = extractSkills(jobText,possibleSkills);
 
 
-async function readResume() {
+async function readResume(resumePath) {
+  const pdfBuffer=fs.readFileSync("resumePath");
+
   const parser = new PDFParse({data:pdfBuffer});
   const result = await parser.getText();
 
@@ -47,4 +48,4 @@ async function readResume() {
   await parser.destroy();
 }
 
-readResume()
+readResume("./resumes/resume.pdf")
