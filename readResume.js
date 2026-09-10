@@ -1,23 +1,7 @@
 import fs from "fs";
 import {PDFParse} from "pdf-parse";
 
-
-function normalizeSkill(skill){
-  return skill.toLowerCase().replace(/[ .]/g, "");
-}
-
-function extractSkills(text,possibleSkills){
-  const normalizeText= normalizeSkill(text);
-  return possibleSkills.filter(skill => normalizeText.includes(normalizeSkill(skill)));
-}
-
-function compareSkills(requiredSkills,resumeSkills){
-  const matchedSkills = requiredSkills.filter(skill => resumeSkills.includes(skill));
-  const missingSkills = requiredSkills.filter(skill => !resumeSkills.includes(skill));
-
-  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;q
-  return {matchedSkills,missingSkills,matchPercentage};
-}
+import {normalizeSkill,extractSkills,compareSkills} from "./skillAnalyzer.js";
 
 const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
 
@@ -29,7 +13,7 @@ const requiredSkills = extractSkills(jobText,possibleSkills);
 
 
 async function readResume(resumePath) {
-  const pdfBuffer=fs.readFileSync("resumePath");
+  const pdfBuffer=fs.readFileSync(resumePath);
 
   const parser = new PDFParse({data:pdfBuffer});
   const result = await parser.getText();
@@ -49,3 +33,4 @@ async function readResume(resumePath) {
 }
 
 readResume("./resumes/resume.pdf")
+
