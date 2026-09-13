@@ -25,12 +25,17 @@ async function readResume(resumePath) {
   const skillAnalysis = compareSkills(requiredSkills,resumeSkills);
 
   console.log("===AI RESUME ANALYZER");
-  console.log("Matched : ",skillAnalysis.matchedSkills);
-  console.log("Missing : ",skillAnalysis.missingSkills);
-  console.log("Match : ",skillAnalysis.matchPercentage.toFixed(2)+"%");
 
+  console.log("Matched : ", skillAnalysis.matchedSkills);
+  console.log("Missing : ", skillAnalysis.missingSkills);
+  console.log("Match : ", skillAnalysis.matchPercentage.toFixed(2) + "%");
+  
   await parser.destroy();
+
+  return skillAnalysis;
+
 }
 
-readResume("./resumes/resume.pdf")
+const analysis = await readResume("./resumes/resume.pdf");
 
+export { readResume };
