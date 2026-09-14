@@ -36,6 +36,4 @@ async function readResume(resumePath) {
 
 }
 
-const analysis = await readResume("./resumes/resume.pdf");
-
 export { readResume };
