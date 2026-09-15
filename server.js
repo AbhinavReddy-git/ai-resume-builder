@@ -19,11 +19,17 @@ app.get("/api/analyze", async (req, res) => {
 });
 
 app.post("/api/analyze", upload.single("resume"), async (req, res) => {
-    console.log(req.file);
+    // console.log(req.file.path);
 
-    res.json({
-        message:"file uploded successfully"
-    });
+    if(!req.file) {
+        return res.status(400).json({
+            message: "Please upload a resume"
+        });
+    }
+
+    const analysis = await readResume(req.file.path);
+
+    res.json(analysis);
 
 });
 
