@@ -27,9 +27,15 @@ app.post("/api/analyze", upload.single("resume"), async (req, res) => {
         });
     }
 
-    const analysis = await readResume(req.file.path);
-
-    res.json(analysis);
+    try{
+        const analysis = await readResume(req.file.path);
+        res.json(analysis);
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            message:"error reading resume "
+        });
+    }
 
 });
 

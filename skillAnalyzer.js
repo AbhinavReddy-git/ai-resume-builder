@@ -11,7 +11,7 @@ function compareSkills(requiredSkills,resumeSkills){
   const matchedSkills = requiredSkills.filter(skill => resumeSkills.includes(skill));
   const missingSkills = requiredSkills.filter(skill => !resumeSkills.includes(skill));
 
-  const matchPercentage = requiredSkills.length===0 ? 0 : (matchedSkills.length/requiredSkills.length)*100;
+  const matchPercentage = requiredSkills.length === 0 ? 0 : Number(((matchedSkills.length / requiredSkills.length) * 100).toFixed(2));
   return {matchedSkills,missingSkills,matchPercentage};
 }
 
