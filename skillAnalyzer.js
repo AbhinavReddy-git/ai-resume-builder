@@ -1,3 +1,17 @@
+const sections = ["projects","experience","skills","education"];
+
+function checkResumeSections(resumeText){
+  const normalizedText = resumeText.toLowerCase();
+
+  const findSections = sections.filter((section) =>normalizedText.includes(section.toLowerCase()));
+  const sectionScore = findSections.length===0 ? 0 : Number(((findSections.length/sections.length)*100).toFixed(2));
+
+  return {
+    foundSections: findSections,
+    sectionScore
+  };
+}
+
 function normalizeSkill(skill){
   return skill.toLowerCase().replace(/[ .]/g, "");
 }
@@ -16,5 +30,5 @@ function compareSkills(requiredSkills,resumeSkills){
 }
 
 export{
-    normalizeSkill,extractSkills,compareSkills
+    normalizeSkill,extractSkills,compareSkills,checkResumeSections
 };

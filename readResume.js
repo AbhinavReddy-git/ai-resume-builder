@@ -1,7 +1,7 @@
 import fs from "fs";
 import {PDFParse} from "pdf-parse";
 
-import {normalizeSkill,extractSkills,compareSkills} from "./skillAnalyzer.js";
+import {normalizeSkill,extractSkills,compareSkills,checkResumeSections} from "./skillAnalyzer.js";
 
 const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
 
@@ -22,17 +22,30 @@ async function readResume(resumePath) {
 
   const resumeSkills = extractSkills(resumeText,possibleSkills);
 
+  const sectionAnalysis = checkResumeSections(resumeText);
+
   const skillAnalysis = compareSkills(requiredSkills,resumeSkills);
+
+  const atsScore = Number(((skillAnalysis.matchPercentage * 0.8) + (sectionAnalysis.sectionScore * 0.2)).toFixed(2));
 
   console.log("===AI RESUME ANALYZER");
 
   console.log("Matched : ", skillAnalysis.matchedSkills);
   console.log("Missing : ", skillAnalysis.missingSkills);
-  console.log("Match : ", skillAnalysis.matchPercentage.toFixed(2) + "%");
+  console.log("Match : ", skillAnalysis.matchPercentage + "%");
+
+  console.log("Sections : ", sectionAnalysis.foundSections);
+  console.log("Section Score : ", sectionAnalysis.sectionScore);
+  console.log("Final ATS Score : ", atsScore);
   
   await parser.destroy();
 
-  return skillAnalysis;
+  return {
+    atsScore,
+    matchedSkills: skillAnalysis.matchedSkills,
+    missingSkills: skillAnalysis.missingSkills,
+    matchPercentage: skillAnalysis.matchPercentage
+};
 
 }
 
