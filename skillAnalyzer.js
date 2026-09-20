@@ -1,3 +1,13 @@
+const possibleKeywords = [
+    "problem solving","communication","teamwork","leadership","time management","project management","analytical thinking","critical thinking"
+];
+
+function checkKeywords(resumeText){
+  const normalizedText = resumeText.toLowerCase();
+
+  const matchedkeywords= possibleKeywords.filter((keyword) => normalizedText.includes(keyword.toLowerCase()));
+  return matchedkeywords;
+}
 const sections = ["projects","experience","skills","education"];
 
 function checkResumeSections(resumeText){
@@ -30,5 +40,5 @@ function compareSkills(requiredSkills,resumeSkills){
 }
 
 export{
-    normalizeSkill,extractSkills,compareSkills,checkResumeSections
+    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords
 };
