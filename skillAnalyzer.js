@@ -1,12 +1,70 @@
 const possibleKeywords = [
     "problem solving","communication","teamwork","leadership","time management","project management","analytical thinking","critical thinking"
 ];
+const keywordVariations = {
+    "problem solving": [
+        "problem solving",
+        "solved problems",
+        "solving problems"
+    ],
 
+    "communication": [
+        "communication",
+        "communicated",
+        "communicating"
+    ],
+
+    "teamwork": [
+        "teamwork",
+        "team work",
+        "worked with a team"
+    ],
+
+    "leadership": [
+        "leadership",
+        "led",
+        "leading"
+    ],
+
+    "time management": [
+        "time management",
+        "managed time",
+        "managing time"
+    ],
+
+    "project management": [
+        "project management",
+        "managed projects",
+        "managing projects"
+    ],
+
+    "analytical thinking": [
+        "analytical thinking",
+        "analyzed",
+        "analysis"
+    ],
+
+    "critical thinking": [
+        "critical thinking",
+        "critical thinker",
+        "critically analyzed"
+    ]
+};
 function checkKeywords(resumeText){
-  const normalizedText = resumeText.toLowerCase();
 
-  const matchedkeywords= possibleKeywords.filter((keyword) => normalizedText.includes(keyword.toLowerCase()));
-  return matchedkeywords;
+    const normalizedText = resumeText.toLowerCase();
+
+    const matchedkeywords = possibleKeywords.filter((keyword) => {
+
+        const variations = keywordVariations[keyword];
+
+        return variations.some(
+            (variation) => normalizedText.includes(variation.toLowerCase())
+        );
+
+    });
+
+    return matchedkeywords;
 }
 const sections = ["projects","experience","skills","education"];
 

@@ -32,13 +32,17 @@ async function readResume(resumePath) {
 
   const resumeKeywords = checkKeywords(resumeText);
   
+  const matchedKeywords = requiredKeywords.filter(
+      (keyword) => resumeKeywords.includes(keyword)
+  );
+
   const resumeSkills = extractSkills(resumeText,possibleSkills);
 
   const sectionAnalysis = checkResumeSections(resumeText);
 
   const skillAnalysis = compareSkills(requiredSkills,resumeSkills);
 
-  const keywordScore = requiredKeywords.length === 0? 0: Number(((resumeKeywords.length / requiredKeywords.length) * 100).toFixed(2));
+  const keywordScore = requiredKeywords.length === 0? 0: Number(((matchedKeywords.length / requiredKeywords.length) * 100).toFixed(2));
   
   const atsScore = Number(((skillAnalysis.matchPercentage * 0.7) + (sectionAnalysis.sectionScore * 0.2)+(keywordScore * 0.1)).toFixed(2));
 
@@ -51,6 +55,8 @@ async function readResume(resumePath) {
 
   console.log("Sections : ", sectionAnalysis.foundSections);
   console.log("Section Score : ", sectionAnalysis.sectionScore);
+
+  console.log("Matched Keywords : ", matchedKeywords);
 
   console.log("Required Keywords : ", requiredKeywords);
   console.log("Resume Keywords : ", resumeKeywords);
