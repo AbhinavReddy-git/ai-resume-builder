@@ -66,8 +66,8 @@ function checkKeywords(resumeText){
 
     return matchedkeywords;
 }
-const sections = ["projects","experience","skills","education"];
 
+const sections = ["projects","experience","skills","education"];
 function checkResumeSections(resumeText){
   const normalizedText = resumeText.toLowerCase();
 
@@ -78,6 +78,34 @@ function checkResumeSections(resumeText){
     foundSections: findSections,
     sectionScore
   };
+}
+
+const experienceKeywords = [
+    "internship",
+    "intern",
+    "developer",
+    "engineer",
+    "worked",
+    "experience"
+];
+function checkExperience(resumeText){
+
+    const normalizedText = resumeText.toLowerCase();
+
+    const matchedExperience = experienceKeywords.filter(
+        (keyword) => normalizedText.includes(keyword)
+    );
+
+    const experienceScore = experienceKeywords.length === 0
+        ? 0
+        : Number(
+            ((matchedExperience.length / experienceKeywords.length) * 100).toFixed(2)
+          );
+
+    return {
+        matchedExperience,
+        experienceScore
+    };
 }
 
 function normalizeSkill(skill){
@@ -98,5 +126,5 @@ function compareSkills(requiredSkills,resumeSkills){
 }
 
 export{
-    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords
+    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience
 };

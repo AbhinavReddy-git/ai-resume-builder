@@ -6,7 +6,8 @@ import {
     extractSkills,
     compareSkills,
     checkResumeSections,
-    checkKeywords
+    checkKeywords,
+    checkExperience
 } from "./skillAnalyzer.js";
 
 const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
@@ -40,11 +41,20 @@ async function readResume(resumePath) {
 
   const sectionAnalysis = checkResumeSections(resumeText);
 
+  const experienceAnalysis = checkExperience(resumeText);
+
   const skillAnalysis = compareSkills(requiredSkills,resumeSkills);
 
   const keywordScore = requiredKeywords.length === 0? 0: Number(((matchedKeywords.length / requiredKeywords.length) * 100).toFixed(2));
   
-  const atsScore = Number(((skillAnalysis.matchPercentage * 0.7) + (sectionAnalysis.sectionScore * 0.2)+(keywordScore * 0.1)).toFixed(2));
+  const atsScore = Number(
+    (
+        (skillAnalysis.matchPercentage * 0.6) +
+        (sectionAnalysis.sectionScore * 0.15) +
+        (keywordScore * 0.1) +
+        (experienceAnalysis.experienceScore * 0.15)
+    ).toFixed(2)
+);
 
 
   console.log("===AI RESUME ANALYZER");
@@ -60,9 +70,13 @@ async function readResume(resumePath) {
 
   console.log("Required Keywords : ", requiredKeywords);
   console.log("Resume Keywords : ", resumeKeywords);
+
   console.log("Final ATS Score : ", atsScore);
 
   console.log("Keyword Score : ", keywordScore);
+
+  console.log("Experience : ", experienceAnalysis.matchedExperience);
+  console.log("Experience Score : ", experienceAnalysis.experienceScore);
   
   await parser.destroy();
 
