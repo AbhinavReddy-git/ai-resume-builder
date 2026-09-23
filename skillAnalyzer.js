@@ -89,22 +89,86 @@ const experienceKeywords = [
     "experience"
 ];
 function checkExperience(resumeText){
-
+    
     const normalizedText = resumeText.toLowerCase();
-
+    
     const matchedExperience = experienceKeywords.filter(
         (keyword) => normalizedText.includes(keyword)
     );
-
+    
     const experienceScore = experienceKeywords.length === 0
-        ? 0
-        : Number(
-            ((matchedExperience.length / experienceKeywords.length) * 100).toFixed(2)
-          );
-
+    ? 0
+    : Number(
+        ((matchedExperience.length / experienceKeywords.length) * 100).toFixed(2)
+    );
+    
     return {
         matchedExperience,
         experienceScore
+    };
+}
+
+const educationKeywords = {
+    "bachelor of technology": [
+        "b.tech",
+        "btech",
+        "bachelor of technology"
+    ],
+
+    "bachelor of engineering": [
+        "b.e",
+        "b.e.",
+        "be",
+        "bachelor of engineering"
+    ],
+
+    "master of technology": [
+        "m.tech",
+        "mtech",
+        "master of technology"
+    ],
+
+    "master of science": [
+        "m.s",
+        "m.s.",
+        "ms",
+        "master of science"
+    ],
+
+    "bachelor's": [
+        "bachelor's"
+    ],
+
+    "master's": [
+        "master's"
+    ],
+
+    "degree": [
+        "degree"
+    ],
+
+    "university": [
+        "university"
+    ],
+
+    "college": [
+        "college"
+    ]
+};
+function checkEducation(resumeText){
+    const normalizedText = resumeText.toLowerCase();
+    const matchedEducation = Object.keys(educationKeywords).filter(
+        (education) => {
+            const variations = educationKeywords[education];
+            return variations.some(
+                (variation) => normalizedText.includes(variation)
+            );
+        }
+    );
+    const educationScore = Object.keys(educationKeywords).length === 0? 0: Number(((matchedEducation.length / Object.keys(educationKeywords).length) * 100).toFixed(2));
+    return {
+        matchedEducation,
+        educationScore
     };
 }
 
@@ -126,5 +190,5 @@ function compareSkills(requiredSkills,resumeSkills){
 }
 
 export{
-    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience
+    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience,checkEducation
 };
