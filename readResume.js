@@ -8,7 +8,8 @@ import {
     checkResumeSections,
     checkKeywords,
     checkExperience,
-    checkEducation
+    checkEducation,
+    checkActionVerbs
 } from "./skillAnalyzer.js";
 
 const jobDescription =  fs.readFileSync("./jobs/job.txt","utf-8");
@@ -49,16 +50,10 @@ async function readResume(resumePath) {
   const keywordScore = requiredKeywords.length === 0? 0: Number(((matchedKeywords.length / requiredKeywords.length) * 100).toFixed(2));
 
   const educationAnalysis = checkEducation(resumeText);
+
+  const actionVerbAnalysis = checkActionVerbs(resumeText);
   
-    const atsScore = Number(
-        (
-            (skillAnalysis.matchPercentage * 0.5) +
-            (sectionAnalysis.sectionScore * 0.15) +
-            (keywordScore * 0.1) +
-            (experienceAnalysis.experienceScore * 0.15) +
-            (educationAnalysis.educationScore * 0.1)
-        ).toFixed(2)
-    );
+    const atsScore = Number(((skillAnalysis.matchPercentage * 0.45) +(sectionAnalysis.sectionScore * 0.15) +(keywordScore * 0.10) +(experienceAnalysis.experienceScore * 0.15) +(educationAnalysis.educationScore * 0.05) +(actionVerbAnalysis.actionVerbScore * 0.10)).toFixed(2));
 
 
   console.log("===AI RESUME ANALYZER");
@@ -84,6 +79,9 @@ async function readResume(resumePath) {
 
   console.log("Education : ", educationAnalysis.matchedEducation);
   console.log("Education Score : ", educationAnalysis.educationScore);
+
+  console.log("Action Verbs : ", actionVerbAnalysis.matchedActionVerbs);
+  console.log("Action Verb Score : ", actionVerbAnalysis.actionVerbScore);
   
   await parser.destroy();
 

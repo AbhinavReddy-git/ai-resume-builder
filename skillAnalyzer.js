@@ -172,6 +172,40 @@ function checkEducation(resumeText){
     };
 }
 
+
+const actionVerbs = [
+    "developed",
+    "built",
+    "implemented",
+    "designed",
+    "created",
+    "optimized",
+    "analyzed",
+    "managed",
+    "led",
+    "improved"
+];
+
+function checkActionVerbs(resumeText){
+
+    const normalizedText = resumeText.toLowerCase();
+
+    const matchedActionVerbs = actionVerbs.filter(
+        (verb) => normalizedText.includes(verb)
+    );
+
+    const actionVerbScore = actionVerbs.length === 0
+        ? 0
+        : Number(
+            ((matchedActionVerbs.length / actionVerbs.length) * 100).toFixed(2)
+          );
+
+    return {
+        matchedActionVerbs,
+        actionVerbScore
+    };
+}
+
 function normalizeSkill(skill){
   return skill.toLowerCase().replace(/[ .]/g, "");
 }
@@ -190,5 +224,5 @@ function compareSkills(requiredSkills,resumeSkills){
 }
 
 export{
-    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience,checkEducation
+    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience,checkEducation,checkActionVerbs
 };
