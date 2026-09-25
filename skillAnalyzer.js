@@ -223,6 +223,48 @@ function compareSkills(requiredSkills,resumeSkills){
   return {matchedSkills,missingSkills,matchPercentage};
 }
 
+function generateSuggestions(missingSkills,keywordScore,actionVerbScore,sectionScore,experienceScore,educationScore) {
+
+    const suggestions = [];
+
+    if (missingSkills.length > 0) {
+        suggestions.push(
+            `Consider adding relevant missing skills: ${missingSkills.join(", ")}`
+        );
+    }
+
+    if (keywordScore < 50) {
+        suggestions.push(
+            "Consider including more relevant keywords from the job description."
+        );
+    }
+
+    if (actionVerbScore < 50) {
+        suggestions.push(
+            "Use more strong action verbs such as developed, implemented, designed, or optimized."
+        );
+    }
+
+    if (sectionScore < 75) {
+        suggestions.push(
+            "Improve your resume sections by adding missing sections such as projects, experience, skills, or education."
+        );
+    }
+
+    if (experienceScore < 50) {
+        suggestions.push(
+            "Strengthen your experience section with more relevant experience, internships, or project work."
+        );
+    }
+
+    if (educationScore < 50) {
+        suggestions.push(
+            "Make your education details clearer by including your degree, college, and university."
+        );
+    }
+    return suggestions;
+}
+
 export{
-    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience,checkEducation,checkActionVerbs
+    normalizeSkill,extractSkills,compareSkills,checkResumeSections,checkKeywords,checkExperience,checkEducation,checkActionVerbs,generateSuggestions
 };
