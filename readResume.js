@@ -97,11 +97,51 @@ async function readResume(resumePath) {
   
   await parser.destroy();
 
-  return {
+return {
     atsScore,
-    matchedSkills: skillAnalysis.matchedSkills,
-    missingSkills: skillAnalysis.missingSkills,
-    matchPercentage: skillAnalysis.matchPercentage,
+
+    weights: {
+        skills: 45,
+        sections: 15,
+        keywords: 10,
+        experience: 15,
+        education: 5,
+        actionVerbs: 10
+    },
+
+    skills: {
+        matched: skillAnalysis.matchedSkills,
+        missing: skillAnalysis.missingSkills,
+        score: skillAnalysis.matchPercentage
+    },
+
+    sections: {
+        found: sectionAnalysis.foundSections,
+        score: sectionAnalysis.sectionScore
+    },
+
+    keywords: {
+        matched: matchedKeywords,
+        required: requiredKeywords,
+        resume: resumeKeywords,
+        score: keywordScore
+    },
+
+    experience: {
+        matched: experienceAnalysis.matchedExperience,
+        score: experienceAnalysis.experienceScore
+    },
+
+    education: {
+        matched: educationAnalysis.matchedEducation,
+        score: educationAnalysis.educationScore
+    },
+
+    actionVerbs: {
+        matched: actionVerbAnalysis.matchedActionVerbs,
+        score: actionVerbAnalysis.actionVerbScore
+    },
+
     suggestions
 };
 
