@@ -5,7 +5,13 @@ import { readResume } from "./readResume.js";
 const app = express();
 const port = 3000;
 
+app.use(express.static("public"));
+
 const upload = multer({ dest: "uploads/" });
+
+app.get("/", (req, res) => {
+    res.sendFile(index);
+});
 
 app.get("/api/test",(req,res)=>{
     res.json({
@@ -18,8 +24,8 @@ app.get("/api/analyze", async (req, res) => {
     res.json(analysis);
 });
 
+
 app.post("/api/analyze", upload.single("resume"), async (req, res) => {
-    // console.log(req.file.path);
 
     if(!req.file) {
         return res.status(400).json({
@@ -27,16 +33,31 @@ app.post("/api/analyze", upload.single("resume"), async (req, res) => {
         });
     }
 
+    const jobText = req.body.jobDescription;
+
+    if(!jobText || !jobText.trim()) {
+        return res.status(400).json({
+            message: "Please enter a job description"
+        });
+    }
+
     try{
-        const analysis = await readResume(req.file.path);
+
+        const analysis = await readResume(
+            req.file.path,
+            jobText
+        );
+
         res.json(analysis);
+
     }catch(error){
+
         console.log(error);
+
         return res.status(500).json({
             message:"error reading resume "
         }); 
     }
-
 });
 
 app.listen(port,()=>{
