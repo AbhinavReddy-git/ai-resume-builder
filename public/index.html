@@ -3,57 +3,246 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AI Resume Analyzer</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <div class="container">
+    <!-- Background decoration -->
 
-        <header>
-            <h1>AI Resume Analyzer</h1>
-            <p>Analyze your resume and improve your ATS score</p>
+    <div class="background-circle circle-one"></div>
+    <div class="background-circle circle-two"></div>
+
+
+    <main class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="logo">
+                <span class="logo-icon">AI</span>
+
+                <span>Resume<span class="logo-highlight">Analyzer</span></span>
+            </div>
+
+            <h1>
+                Build a Resume That
+                <span>Gets Noticed.</span>
+            </h1>
+
+            <p class="subtitle">
+                Analyze your resume against a specific job description
+                and discover how to improve your ATS score.
+            </p>
+
         </header>
 
 
-        <section class="upload-section">
+        <!-- INPUT SECTION -->
 
-            <h2>Upload Your Resume</h2>
+        <section class="input-section">
 
-            <input
-                type="file"
-                id="resumeInput"
-                accept=".pdf"
-            >
-            <h2>Job Description</h2>
 
-            <textarea
-                id="jobDescription"
-                placeholder="Paste the job description here..."
-                rows="10"
-            ></textarea>
-            
-            <button id="analyzeBtn">
-                Analyze Resume
-            </button>
+            <!-- RESUME -->
 
-            <p id="status"></p>
+            <div class="input-card">
+
+                <div class="card-heading">
+
+                    <div class="heading-icon">
+                        📄
+                    </div>
+
+                    <div>
+                        <h2>Upload Resume</h2>
+
+                        <p>
+                            Upload your resume in PDF format
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <label
+                    for="resumeInput"
+                    class="upload-area"
+                    id="uploadArea"
+                >
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+                    <h3>
+                        Drop your resume here
+                    </h3>
+
+                    <p>
+                        or click to browse
+                    </p>
+
+                    <span class="file-type">
+                        PDF only
+                    </span>
+
+                    <input
+                        type="file"
+                        id="resumeInput"
+                        accept=".pdf,application/pdf"
+                    >
+
+                </label>
+
+
+                <div
+                    id="fileName"
+                    class="file-name hidden"
+                ></div>
+
+            </div>
+
+
+            <!-- JOB DESCRIPTION -->
+
+            <div class="input-card">
+
+                <div class="card-heading">
+
+                    <div class="heading-icon">
+                        💼
+                    </div>
+
+                    <div>
+                        <h2>Job Description</h2>
+
+                        <p>
+                            Paste the job description you are applying for
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <textarea
+                    id="jobDescription"
+                    placeholder="Paste the job description here...
+
+Example:
+We are looking for a Software Developer with experience in JavaScript, React, Node.js, AWS and MongoDB..."
+                ></textarea>
+
+
+                <div class="character-count">
+
+                    <span id="charCount">
+                        0 characters
+                    </span>
+
+                </div>
+
+            </div>
 
         </section>
 
 
-        <section id="results" class="results hidden">
+        <!-- ANALYZE BUTTON -->
 
-            <div class="score-card">
+        <button
+            id="analyzeBtn"
+            class="analyze-btn"
+        >
 
-                <h2>ATS Score</h2>
+            <span id="buttonText">
+                Analyze My Resume
+            </span>
 
-                <div id="atsScore">
-                    0
+            <span class="button-arrow">
+                →
+            </span>
+
+        </button>
+
+
+        <!-- STATUS -->
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+
+        <!-- RESULTS -->
+
+        <section
+            id="results"
+            class="results hidden"
+        >
+
+
+            <!-- ATS SCORE -->
+
+            <div class="ats-card">
+
+                <div class="ats-left">
+
+                    <span class="result-label">
+                        YOUR ATS SCORE
+                    </span>
+
+                    <h2>
+                        Resume Compatibility
+                    </h2>
+
+                    <p>
+                        Based on the job description you provided
+                    </p>
+
+                </div>
+
+
+                <div class="score-circle">
+
+                    <div>
+
+                        <span id="atsScore">
+                            0
+                        </span>
+
+                        <small>/100</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORE CARDS -->
+
+            <div class="section-title">
+
+                <div>
+                    <span>ANALYSIS</span>
+
+                    <h2>
+                        Resume Breakdown
+                    </h2>
                 </div>
 
             </div>
@@ -61,63 +250,346 @@
 
             <div class="score-grid">
 
-                <div class="score-box">
-                    <h3>Skills</h3>
-                    <p id="skillScore">0</p>
-                </div>
 
                 <div class="score-box">
-                    <h3>Sections</h3>
-                    <p id="sectionScore">0</p>
+
+                    <div class="score-icon">
+                        ⚡
+                    </div>
+
+                    <div class="score-info">
+
+                        <h3>
+                            Skills
+                        </h3>
+
+                        <p>
+                            Technical skill match
+                        </p>
+
+                    </div>
+
+                    <strong id="skillScore">
+                        0%
+                    </strong>
+
                 </div>
 
-                <div class="score-box">
-                    <h3>Keywords</h3>
-                    <p id="keywordScore">0</p>
-                </div>
 
                 <div class="score-box">
-                    <h3>Experience</h3>
-                    <p id="experienceScore">0</p>
+
+                    <div class="score-icon">
+                        📑
+                    </div>
+
+                    <div class="score-info">
+
+                        <h3>
+                            Sections
+                        </h3>
+
+                        <p>
+                            Resume structure
+                        </p>
+
+                    </div>
+
+                    <strong id="sectionScore">
+                        0%
+                    </strong>
+
                 </div>
 
-                <div class="score-box">
-                    <h3>Education</h3>
-                    <p id="educationScore">0</p>
-                </div>
 
                 <div class="score-box">
-                    <h3>Action Verbs</h3>
-                    <p id="actionVerbScore">0</p>
+
+                    <div class="score-icon">
+                        🔎
+                    </div>
+
+                    <div class="score-info">
+
+                        <h3>
+                            Keywords
+                        </h3>
+
+                        <p>
+                            Job keyword match
+                        </p>
+
+                    </div>
+
+                    <strong id="keywordScore">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="score-box">
+
+                    <div class="score-icon">
+                        💼
+                    </div>
+
+                    <div class="score-info">
+
+                        <h3>
+                            Experience
+                        </h3>
+
+                        <p>
+                            Experience signals
+                        </p>
+
+                    </div>
+
+                    <strong id="experienceScore">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="score-box">
+
+                    <div class="score-icon">
+                        🎓
+                    </div>
+
+                    <div class="score-info">
+
+                        <h3>
+                            Education
+                        </h3>
+
+                        <p>
+                            Education details
+                        </p>
+
+                    </div>
+
+                    <strong id="educationScore">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="score-box">
+
+                    <div class="score-icon">
+                        🚀
+                    </div>
+
+                    <div class="score-info">
+
+                        <h3>
+                            Action Verbs
+                        </h3>
+
+                        <p>
+                            Strong resume language
+                        </p>
+
+                    </div>
+
+                    <strong id="actionVerbScore">
+                        0%
+                    </strong>
+
                 </div>
 
             </div>
 
 
-            <div class="card">
+            <!-- SKILLS -->
 
-                <h2>Skills Analysis</h2>
+            <div class="analysis-card">
 
-                <h3>Matched Skills</h3>
-                <ul id="matchedSkills"></ul>
+                <div class="card-title">
 
-                <h3>Missing Skills</h3>
-                <ul id="missingSkills"></ul>
+                    <div class="heading-icon">
+                        ⚡
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Skills Analysis
+                        </h2>
+
+                        <p>
+                            How your technical skills match the job
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skills-columns">
+
+
+                    <div class="skill-group">
+
+                        <div class="skill-heading matched-heading">
+
+                            <span class="dot"></span>
+
+                            Matched Skills
+
+                        </div>
+
+                        <div
+                            id="matchedSkills"
+                            class="skill-list"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="skill-group">
+
+                        <div class="skill-heading missing-heading">
+
+                            <span class="dot"></span>
+
+                            Missing Skills
+
+                        </div>
+
+                        <div
+                            id="missingSkills"
+                            class="skill-list"
+                        ></div>
+
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <div class="card">
+            <!-- KEYWORDS -->
 
-                <h2>Suggestions</h2>
+            <div class="analysis-card">
 
-                <ul id="suggestions"></ul>
+                <div class="card-title">
+
+                    <div class="heading-icon">
+                        🔎
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Keyword Analysis
+                        </h2>
+
+                        <p>
+                            Keywords identified from the job description
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="keyword-section">
+
+                    <div>
+
+                        <h3>
+                            Matched Keywords
+                        </h3>
+
+                        <div
+                            id="matchedKeywords"
+                            class="skill-list"
+                        ></div>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Required Keywords
+                        </h3>
+
+                        <div
+                            id="requiredKeywords"
+                            class="skill-list"
+                        ></div>
+
+                    </div>
+
+                </div>
 
             </div>
+
+
+            <!-- SUGGESTIONS -->
+
+            <div class="suggestions-card">
+
+                <div class="card-title">
+
+                    <div class="heading-icon">
+                        ✨
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            How to Improve
+                        </h2>
+
+                        <p>
+                            Personalized suggestions for your resume
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="suggestions"
+                    class="suggestions-list"
+                ></div>
+
+            </div>
+
+
+            <!-- ANALYZE AGAIN -->
+
+            <button
+                id="analyzeAgainBtn"
+                class="analyze-again-btn"
+            >
+                Analyze Another Resume
+            </button>
+
 
         </section>
 
-    </div>
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <p>
+                AI Resume Analyzer
+                <span>•</span>
+                Built for smarter job applications
+            </p>
+
+        </footer>
+
+    </main>
+
 
     <script src="script.js"></script>
 
